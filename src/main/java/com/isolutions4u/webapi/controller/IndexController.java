@@ -3,13 +3,16 @@ package com.isolutions4u.webapi.controller;
 
 import com.isolutions4u.webapi.model.Employee;
 import com.isolutions4u.webapi.service.EmployeeService;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RestController
+@RequestMapping("/api")
 public class IndexController {
 
     @Qualifier("employeeService")
@@ -26,10 +29,13 @@ public class IndexController {
         return employeeService.findProductByEmployeeId(employeeId);
     }
 
-    @PostMapping("/employee")
+    @PostMapping(value = "/employee", produces = "application/json")
     public String createEmployee(@RequestBody Employee employee) {
 
-        return employeeService.saveEmployee(employee);
+        String output = employeeService.saveEmployee(employee);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("output", output);
+        return jsonObject.toString();
 
     }
 
