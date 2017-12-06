@@ -41,12 +41,20 @@ public class IndexController {
 
     @PutMapping("/employee")
     public String updateEmployee(@RequestBody Employee employee) {
-        return employeeService.updateEmployee(employee);
+
+        String output = employeeService.updateEmployee(employee);
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("output", output);
+        return jsonObject.toString();
     }
 
     @DeleteMapping("employee/{employeeId}")
     public String deleteEmployee(@PathVariable("employeeId") Integer employeeId) {
-        return employeeService.deleteEmployee(employeeId);
+        String output = employeeService.deleteEmployee(employeeId);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("output", output);
+        return jsonObject.toString();
     }
 
 
